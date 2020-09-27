@@ -31,6 +31,32 @@ class Calculator {
     this.currOperand = '';
   }
 
+  compute() {
+    let computation; //result of this function
+    const prev = parseFloat(this.prevOperand);
+    const curr = parseFloat(this.currOperand);
+    if (isNaN(prev) || isNaN(curr)) return;
+    switch (this.operation) {
+      case '+':
+        computation = prev + curr;
+        break;
+      case '-':
+        computation = prev - curr;
+        break;
+      case '*':
+        computation = prev * curr;
+        break;
+      case '÷':
+        computation = prev / curr;
+        break;
+      default:
+        return;
+    }
+    this.currOperand = computation;
+    this.operation = undefined;
+    this.prevOperand = '';
+  }
+
   // make the clicked value printed
   updateDisplay() {
     this.currOperandElement.innerText = this.currOperand;
@@ -63,4 +89,9 @@ operationBtn.forEach((button) => {
     calculator.chooseOperation(button.innerText);
     calculator.updateDisplay();
   });
+});
+
+equalsBtn.addEventListener('click', () => {
+  calculator.compute();
+  calculator.updateDisplay();
 });
