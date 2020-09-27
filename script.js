@@ -13,6 +13,10 @@ class Calculator {
     this.operation = undefined; // don't have any operation selected
   }
 
+  delete() {
+    this.currOperand = this.currOperand.slice(0, -1);
+  }
+
   // add the clicked number
   appendNumber(number) {
     //avoiding multiple dot('.')
@@ -93,5 +97,15 @@ operationBtn.forEach((button) => {
 
 equalsBtn.addEventListener('click', () => {
   calculator.compute();
+  calculator.updateDisplay();
+});
+
+acBtn.addEventListener('click', () => {
+  calculator.clear();
+  calculator.updateDisplay();
+});
+
+deleteBtn.addEventListener('click', () => {
+  calculator.delete();
   calculator.updateDisplay();
 });
