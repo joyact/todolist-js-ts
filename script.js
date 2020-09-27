@@ -5,8 +5,9 @@ class Calculator {
     this.clear();
   }
 
-  // remove all values from display
+  // initial display on load
   clear() {
+    // declare 3 methods
     this.prevOperand = '';
     this.currOperand = '';
     this.operation = undefined; // don't have any operation selected
@@ -17,12 +18,23 @@ class Calculator {
     //avoiding multiple dot('.')
     if (number === '.' && this.currOperand.includes('.')) return;
     this.currOperand += number;
-    console.log(this.currOperand);
   }
 
-  // change the value on display
+  // move numbers to the previous area
+  chooseOperation(operation) {
+    if (this.currOperand === '') return;
+    if (this.prevOperand !== '') {
+      this.compute();
+    }
+    this.operation = operation;
+    this.prevOperand = this.currOperand;
+    this.currOperand = '';
+  }
+
+  // make the clicked value printed
   updateDisplay() {
     this.currOperandElement.innerText = this.currOperand;
+    this.prevOperandElement.innerText = this.prevOperand;
   }
 }
 
@@ -37,9 +49,18 @@ const currOperandElement = document.querySelector('.current-operand');
 
 const calculator = new Calculator(prevOperandElement, currOperandElement);
 
+//when number buttons clicked
 numberBtn.forEach((button) => {
   button.addEventListener('click', () => {
     calculator.appendNumber(button.innerText);
+    calculator.updateDisplay();
+  });
+});
+
+//when operation buttons clicked
+operationBtn.forEach((button) => {
+  button.addEventListener('click', () => {
+    calculator.chooseOperation(button.innerText);
     calculator.updateDisplay();
   });
 });
