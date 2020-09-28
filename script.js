@@ -13,6 +13,7 @@ class Calculator {
     this.operation = undefined; // don't have any operation selected
   }
 
+  // remove the last added number
   delete() {
     this.currOperand = this.currOperand.slice(0, -1);
   }
@@ -35,6 +36,7 @@ class Calculator {
     this.currOperand = '';
   }
 
+  // compute the number
   compute() {
     let computation; //result of this function
     const prev = parseFloat(this.prevOperand);
@@ -61,10 +63,38 @@ class Calculator {
     this.prevOperand = '';
   }
 
+  // handle the decimal place
+  getDisplayNumber(number) {
+    const stringNumber = number.toString();
+    const integerDigits = parseFloat(stringNumber.split('.')[0]); // before the period(.)
+    const decimalDigits = stringNumber.split('.')[1]; // after the period(.)
+    let integerDisplay;
+
+    // add thousand delimiter (,)
+    if (isNaN(integerDigits)) {
+      integerDisplay = '';
+    } else {
+      integerDisplay = integerDigits.toLocaleString('en', {
+        maximumFractionDigits: 0, // zero decimal place
+      });
+    }
+
+    // add decimal point (.)
+    if (decimalDigits != null) {
+      return `${integerDisplay}.${decimalDigits}`;
+    } else {
+      return integerDisplay;
+    }
+  }
+
   // make the clicked value printed
   updateDisplay() {
-    this.currOperandElement.innerText = this.currOperand;
-    this.prevOperandElement.innerText = this.prevOperand;
+    this.currOperandElement.innerText = this.getDisplayNumber(this.currOperand);
+    if (this.operation != null) {
+      this.prevOperandElement.innerText = `${this.getDisplayNumber(this.prevOperand)} ${this.operation}`;
+    } else {
+      this.prevOperandElement.innerText = '';
+    }
   }
 }
 
@@ -79,7 +109,7 @@ const currOperandElement = document.querySelector('.current-operand');
 
 const calculator = new Calculator(prevOperandElement, currOperandElement);
 
-//when number buttons clicked
+//when number buttons are clicked
 numberBtn.forEach((button) => {
   button.addEventListener('click', () => {
     calculator.appendNumber(button.innerText);
@@ -87,7 +117,7 @@ numberBtn.forEach((button) => {
   });
 });
 
-//when operation buttons clicked
+//when operation buttons are clicked
 operationBtn.forEach((button) => {
   button.addEventListener('click', () => {
     calculator.chooseOperation(button.innerText);
@@ -95,16 +125,19 @@ operationBtn.forEach((button) => {
   });
 });
 
+//when '=' is clicked
 equalsBtn.addEventListener('click', () => {
   calculator.compute();
   calculator.updateDisplay();
 });
 
+//when 'AC' is clicked
 acBtn.addEventListener('click', () => {
   calculator.clear();
   calculator.updateDisplay();
 });
 
+//when 'DEL' is clicked
 deleteBtn.addEventListener('click', () => {
   calculator.delete();
   calculator.updateDisplay();
