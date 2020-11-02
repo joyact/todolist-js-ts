@@ -11,7 +11,7 @@ body {
   min-height: 100vh;
   font-size: 1.5rem;
   font-weight: 600;
-  background: linear-gradient(to right, hsl(200, 100%, 50%), hsl(175, 100%, 50%));
+  background: linear-gradient(to right, #ec6f66, #ffaf7b);
 }
 
 .clock {
