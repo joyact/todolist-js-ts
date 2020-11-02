@@ -1,5 +1,7 @@
 # Calculator
 
+Build A Calculator with JavaScript
+
 ## Description
 
 ## Preview
