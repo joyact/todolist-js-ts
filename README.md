@@ -6,7 +6,7 @@ Build A Calculator with JavaScript
 
 ## Preview
 
-👉 [Live Demo](https://joyact-calculator.netlify.app/)
+👉 [Live Demo](https://calculator-joy.netlify.app/)
 
 ![Calculator](img/readme.gif)
 
