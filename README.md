@@ -6,9 +6,9 @@ Build an analog clock with JavaScript
 
 ## Preview
 
-👉 [Live Demo](https://joyact-clock.netlify.app/)
+👉 [Live Demo](https://clock-joy.netlify.app/)
 
-![countdown](img/readme.gif)
+![clock](img/readme.jpg)
 
 ## Built with
 
