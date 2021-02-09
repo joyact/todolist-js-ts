@@ -7,20 +7,27 @@
   <title>Todo List</title>
   <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,700,900&display=swap" rel="stylesheet"/>
   <link rel="stylesheet" href="css/main.css">
+  <script defer src="js/script.js"></script>
 </head>
 <body>
   <h1 class="title">Vanila Javascript Todolist</h1>
 
   <div class="all-tasks">
     <h2 class="task-list-title">My lists</h2>
-    <ul class="task-list">
+    <ul class="task-list" data-lists>
       <li class="list-name active">YouTube</li>
       <li class='list-name'>Work</li>
       <li class='list-name'>Grocery</li>
     </ul>
 
-    <form action="">
-      <input type="text" class="new list" placeholder="new list name" aria-label="new list name" />
+    <form action="" data-new-list-form>
+      <input 
+        type="text" 
+        class="new list" 
+        placeholder="new list name" 
+        aria-label="new list name" 
+        data-new-list-input
+      />
       <button class="btn add" aria-label="add new list">+</button>
     </form>
   </div>
