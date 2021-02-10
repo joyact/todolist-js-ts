@@ -4,6 +4,10 @@ const newListInput = document.querySelector('[data-list-input]');
 const taskBox = document.querySelector('[data-task-box]');
 const taskTitle = document.querySelector('[data-task-title]');
 const taskCount = document.querySelector('[data-task-count]');
+const taskContainer = document.querySelector('[data-tasks]');
+const taskTemplate = document.getElementById('task-template');
+const newTaskForm = document.querySelector('[data-task-form]');
+const newTaskInput = document.querySelector('[data-task-input]');
 
 const LOCAL_LIST_KEY = 'task.lists';
 const LOCAL_ACTIVE_LIST_KEY = 'task.activeList';
@@ -15,8 +19,7 @@ listContainer.addEventListener('click', (e) => {
   if (e.target.tagName.toLowerCase() === 'li') {
     activeListId = e.target.dataset.listId;
   }
-  save();
-  render();
+  saveAndRender();
 });
 
 // create a new list object when submitted
@@ -24,20 +27,43 @@ newListForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const listName = newListInput.value;
   if (listName == null || listName === '') return;
+
   const list = createList(listName);
   lists.push(list);
   newListInput.value = '';
 
-  save(); // save on localstorage
-  render(); // create DOM element on screen
+  saveAndRender();
 });
 
-// list template
+// create a new task object when submitted
+newTaskForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const activeList = lists.find((list) => list.id === activeListId);
+  const taskName = newTaskInput.value;
+
+  if (taskName == null || taskName === '') return;
+  const task = createTask(taskName);
+  activeList.tasks.push(task);
+  newTaskInput.value = '';
+
+  saveAndRender();
+});
+
+// list data
 function createList(name) {
   return {
     id: Date.now().toString(),
     name: name,
     tasks: [],
+  };
+}
+
+// task data
+function createTask(task) {
+  return {
+    id: Date.now().toString(),
+    task: task,
+    isComplete: false,
   };
 }
 
@@ -48,6 +74,11 @@ function getTaskInfo(target) {
   taskCount.innerHTML = `${incompleteTask} ${taskString} remaining`;
 }
 
+function saveAndRender() {
+  save();
+  render();
+}
+
 // save information on localStorage
 function save() {
   localStorage.setItem(LOCAL_LIST_KEY, JSON.stringify(lists));
@@ -55,9 +86,8 @@ function save() {
 }
 
 function render() {
-  // remove current DOM elements
-  clearElements(listContainer);
-  renderLists();
+  clearElements(listContainer); // remove current DOM elements
+  renderLists(); // Represent list data into DOM
 
   // render task container when the list is selected
   const activeList = lists.find((list) => list.id === activeListId);
@@ -68,10 +98,13 @@ function render() {
     taskBox.style.display = 'block';
     getTaskInfo(activeList);
   }
+
+  clearElements(taskContainer); // remove current DOM elements
+  renderTasks(activeList); // Represent task data into DOM
 }
 
+// create new li elements
 function renderLists() {
-  // create new li elements
   lists.forEach((list) => {
     const listElement = document.createElement('li');
     listElement.classList.add('list-name');
@@ -81,6 +114,21 @@ function renderLists() {
     }
     listElement.innerHTML = list.name;
     listContainer.appendChild(listElement);
+  });
+}
+
+// create a new task by the template
+function renderTasks(activeList) {
+  activeList.tasks.forEach((task) => {
+    const taskElement = document.importNode(taskTemplate.content, true);
+    const checkbox = taskElement.querySelector('input');
+    const label = taskElement.querySelector('label');
+
+    checkbox.id = task.id;
+    checkbox.checked = task.isComplete;
+    label.htmlFor = task.id;
+    label.append(task.task);
+    taskContainer.appendChild(taskElement);
   });
 }
 

@@ -39,29 +39,44 @@
     </div>
 
     <div class="todo-body">
-      <div class="tasks">
+      <div class="tasks" data-tasks>
         <div class="task">
           <input type="checkbox" id="task-1">
-          <label for="task-1"><span class="custom-checkbox"></span>study typescript</label>
+          <label for="task-1">
+            <span class="custom-checkbox"></span>
+            study typescript
+          </label>
         </div>
         <!-- /task-1 -->
 
         <div class="task">
           <input type="checkbox" id="task-2">
-          <label for="task-2"><span class="custom-checkbox"></span>make portfolio</label>
+          <label for="task-2">
+            <span class="custom-checkbox"></span>
+            make portfolio
+          </label>
         </div>
         <!-- /task-2 -->
 
         <div class="task">
           <input type="checkbox" id="task-3">
-          <label for="task-3"><span class="custom-checkbox"></span>eat chicken</label>
+          <label for="task-3">
+            <span class="custom-checkbox"></span>
+            eat chicken
+          </label>
         </div>
       </div>
         <!-- /task-3 -->
 
       <div class="add-task">
-        <form action="">
-          <input type="text" class="new todo" placeholder="new task name" aria-label="new task name" />
+        <form action="" data-task-form>
+          <input 
+            type="text" 
+            class="new todo" 
+            placeholder="new task name" 
+            aria-label="new task name"
+            data-task-input 
+          />
           <button class="btn add" aria-label="add new task">+</button>
         </form>
       </div>
@@ -72,5 +87,13 @@
       </div>
     </div>
   </div>
+  <template id='task-template'>
+    <div class="task">
+      <input type="checkbox" />
+      <label>
+        <span class="custom-checkbox"></span>
+      </label>
+    </div>
+  </template>
 </body>
 </html>
