@@ -8,6 +8,8 @@ const taskContainer = document.querySelector('[data-tasks]');
 const taskTemplate = document.getElementById('task-template');
 const newTaskForm = document.querySelector('[data-task-form]');
 const newTaskInput = document.querySelector('[data-task-input]');
+const deleteButton = document.querySelector('[data-delete-btn');
+const clearCompleteButton = document.querySelector('[data-clear-btn');
 
 const LOCAL_LIST_KEY = 'task.lists';
 const LOCAL_ACTIVE_LIST_KEY = 'task.activeList';
@@ -20,6 +22,19 @@ listContainer.addEventListener('click', (e) => {
     activeListId = e.target.dataset.listId;
   }
   saveAndRender();
+});
+
+// toggle checkbox
+taskContainer.addEventListener('click', (e) => {
+  if (e.target.tagName.toLowerCase() === 'input') {
+    const activeList = lists.find((list) => list.id === activeListId);
+    const clickedTask = activeList.tasks.find(
+      (task) => task.id === e.target.id
+    );
+    clickedTask.isComplete = e.target.checked;
+    save();
+    getTaskInfo(activeList);
+  }
 });
 
 // create a new list object when submitted
@@ -49,6 +64,19 @@ newTaskForm.addEventListener('submit', (e) => {
   saveAndRender();
 });
 
+// delete the completed tasks
+clearCompleteButton.addEventListener('click', (e) => {
+  const activeList = lists.find((list) => list.id === activeListId);
+  activeList.tasks = activeList.tasks.filter((task) => !task.isComplete);
+  saveAndRender();
+});
+
+// delete current list
+deleteButton.addEventListener('click', (e) => {
+  lists = lists.filter((list) => list.id !== activeListId);
+  saveAndRender();
+});
+
 // list data
 function createList(name) {
   return {
@@ -67,9 +95,11 @@ function createTask(task) {
   };
 }
 
+// count the current tasks
 function getTaskInfo(target) {
-  const incompleteTask = target.tasks.filter((task) => !task.complete).length;
-  const taskString = incompleteTask === 0 || 1 ? 'task' : 'tasks';
+  const incompleteTask = target.tasks.filter((task) => !task.isComplete).length;
+  const taskString =
+    incompleteTask === 0 || incompleteTask === 1 ? 'task' : 'tasks';
   taskTitle.innerHTML = target.name;
   taskCount.innerHTML = `${incompleteTask} ${taskString} remaining`;
 }
@@ -85,6 +115,7 @@ function save() {
   localStorage.setItem(LOCAL_ACTIVE_LIST_KEY, activeListId);
 }
 
+// render the page
 function render() {
   clearElements(listContainer); // remove current DOM elements
   renderLists(); // Represent list data into DOM
@@ -97,10 +128,9 @@ function render() {
   } else {
     taskBox.style.display = 'block';
     getTaskInfo(activeList);
+    clearElements(taskContainer); // remove current DOM elements
+    renderTasks(activeList); // Represent task data into DOM
   }
-
-  clearElements(taskContainer); // remove current DOM elements
-  renderTasks(activeList); // Represent task data into DOM
 }
 
 // create new li elements
@@ -132,6 +162,7 @@ function renderTasks(activeList) {
   });
 }
 
+// remove child elements in the target
 function clearElements(element) {
   while (element.firstChild) {
     element.removeChild(element.firstChild);
