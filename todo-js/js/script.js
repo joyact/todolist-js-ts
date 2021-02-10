@@ -1,11 +1,22 @@
 const listContainer = document.querySelector('[data-lists]');
-const newListForm = document.querySelector('[data-new-list-form');
-const newListInput = document.querySelector('[data-new-list-input');
+const newListForm = document.querySelector('[data-new-list-form]');
+const newListInput = document.querySelector('[data-new-list-input]');
 
-const LOCAL_STORAGE_LIST_KEY = 'task.lists';
-let lists = JSON.parse(localStorage.getItem(LOCAL_STORAGE_LIST_KEY)) || [];
+const LOCAL_LIST_KEY = 'task.lists';
+const LOCAL_ACTIVE_LIST_KEY = 'task.activeList';
+let lists = JSON.parse(localStorage.getItem(LOCAL_LIST_KEY)) || [];
+let activeListId = localStorage.getItem(LOCAL_ACTIVE_LIST_KEY);
 
-// create a new task > save in object > convert to HTML
+// get the selected li element's id
+listContainer.addEventListener('click', (e) => {
+  if (e.target.tagName.toLowerCase() === 'li') {
+    activeListId = e.target.dataset.listId;
+  }
+  save();
+  render();
+});
+
+// create a new list object when submitted
 newListForm.addEventListener('submit', (e) => {
   e.preventDefault();
   const listName = newListInput.value;
@@ -18,16 +29,19 @@ newListForm.addEventListener('submit', (e) => {
   render(); // create DOM element on screen
 });
 
+// list template
 function createList(name) {
   return {
-    id: Date.now(),
+    id: Date.now().toString(),
     name: name,
     tasks: [],
   };
 }
 
+// save information on localStorage
 function save() {
-  localStorage.setItem(LOCAL_STORAGE_LIST_KEY, JSON.stringify(lists));
+  localStorage.setItem(LOCAL_LIST_KEY, JSON.stringify(lists));
+  localStorage.setItem(LOCAL_ACTIVE_LIST_KEY, JSON.stringify(activeListId));
 }
 
 function render() {
@@ -38,6 +52,10 @@ function render() {
   lists.forEach((list) => {
     const listElement = document.createElement('li');
     listElement.classList.add('list-name');
+    listElement.dataset.listId = list.id;
+    if (list.id === activeListId) {
+      listElement.classList.add('active');
+    }
     listElement.innerHTML = list.name;
     listContainer.appendChild(listElement);
   });
