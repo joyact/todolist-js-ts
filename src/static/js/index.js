@@ -1,3 +1,6 @@
+import Home from './view/Home.js';
+import Todolist from './view/Todolist.js';
+
 // navigate path without re-rendering
 const navigateTo = (url) => {
   history.pushState(null, null, url);
@@ -8,11 +11,11 @@ const navigateTo = (url) => {
 const router = async () => {
   const routes = [
     // if user goes to the PATH, run VIEW
-    { path: '/', view: () => console.log('Viewing Home') },
-    { path: '/todolist', view: () => console.log('Viewing todolist') },
-    { path: '/painter', view: () => console.log('Viewing painter') },
-    { path: '/calculator', view: () => console.log('Viewing calculator') },
-    { path: '/clock', view: () => console.log('Viewing clock') },
+    { path: '/', view: Home },
+    { path: '/todolist', view: Todolist },
+    // { path: '/painter', view: () => console.log('Viewing painter') },
+    // { path: '/calculator', view: () => console.log('Viewing calculator') },
+    // { path: '/clock', view: () => console.log('Viewing clock') },
   ];
 
   // Check if each route matches with the current location
@@ -34,8 +37,12 @@ const router = async () => {
     };
   }
 
-  console.log(current.route.view());
+  const view = new current.route.view(); // create the instance (view is class)
+  document.querySelector('#app').innerHTML = await view.getHtml();
 };
+
+// get page active when history goes backward & forward
+window.addEventListener('popstate', router);
 
 // run router() after all of DOM has loaded up
 document.addEventListener('DOMContentLoaded', () => {
