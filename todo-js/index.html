@@ -6,8 +6,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Todo List</title>
   <link href="https://fonts.googleapis.com/css?family=Work+Sans:300,400,700,900&display=swap" rel="stylesheet"/>
-  <link rel="stylesheet" href="css/main.css">
-  <script defer src="js/script.js"></script>
+  <link rel="stylesheet" href="style.css">
+  <script defer src="script.js"></script>
 </head>
 <body>
   <h1 class="title">Vanila Javascript Todolist</h1>
@@ -15,9 +15,6 @@
   <div class="all-tasks">
     <h2 class="task-list-title">My lists</h2>
     <ul class="task-list" data-lists>
-      <li class="list-name active">YouTube</li>
-      <li class='list-name'>Work</li>
-      <li class='list-name'>Grocery</li>
     </ul>
 
     <form action="" data-list-form>
@@ -34,39 +31,12 @@
 
   <div class="todo-list" data-task-box>
     <div class="todo-header">
-      <h2 class="todo-title" data-task-title>YouTube</h2>
-      <p class="task-count" data-task-count>3 tasks remaining</p>
+      <h2 class="todo-title" data-task-title></h2>
+      <p class="task-count" data-task-count></p>
     </div>
 
     <div class="todo-body">
-      <div class="tasks" data-tasks>
-        <div class="task">
-          <input type="checkbox" id="task-1">
-          <label for="task-1">
-            <span class="custom-checkbox"></span>
-            study typescript
-          </label>
-        </div>
-        <!-- /task-1 -->
-
-        <div class="task">
-          <input type="checkbox" id="task-2">
-          <label for="task-2">
-            <span class="custom-checkbox"></span>
-            make portfolio
-          </label>
-        </div>
-        <!-- /task-2 -->
-
-        <div class="task">
-          <input type="checkbox" id="task-3">
-          <label for="task-3">
-            <span class="custom-checkbox"></span>
-            eat chicken
-          </label>
-        </div>
-      </div>
-        <!-- /task-3 -->
+      <div class="tasks" data-tasks></div>
 
       <div class="add-task">
         <form action="" data-task-form>
