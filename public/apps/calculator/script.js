@@ -91,7 +91,9 @@ class Calculator {
   updateDisplay() {
     this.currOperandElement.innerText = this.getDisplayNumber(this.currOperand);
     if (this.operation != null) {
-      this.prevOperandElement.innerText = `${this.getDisplayNumber(this.prevOperand)} ${this.operation}`;
+      this.prevOperandElement.innerText = `${this.getDisplayNumber(
+        this.prevOperand
+      )} ${this.operation}`;
     } else {
       this.prevOperandElement.innerText = '';
     }
