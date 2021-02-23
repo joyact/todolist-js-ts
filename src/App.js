@@ -1,8 +1,11 @@
 import React from 'react';
+import Header from './components/Header';
+import Body from './components/Body';
 
 const App = () => (
   <div>
-    <h1>wediz</h1>
+    <Header />
+    <Body />
   </div>
 );
 
