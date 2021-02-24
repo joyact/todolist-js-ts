@@ -7,6 +7,10 @@ module.exports = {
   output: {
     filename: 'bundle.[hash].js',
     path: path.resolve(__dirname, 'dist'),
+    publicPath: '/', // redirects all the server requests
+  },
+  devServer: {
+    historyApiFallback: true, // 404s will fallback to /index.html
   },
   plugins: [
     new HtmlWebpackPlugin({
