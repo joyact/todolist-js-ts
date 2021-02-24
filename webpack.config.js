@@ -3,18 +3,23 @@ const path = require('path');
 
 module.exports = {
   mode: 'development',
-  entry: './src/index.js',
+  entry: path.resolve(__dirname, './src'),
   output: {
     filename: 'bundle.[hash].js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/', // redirects all the server requests
   },
   devServer: {
+    contentBase: path.resolve(__dirname, 'dist'),
+    hot: true,
+    open: true,
     historyApiFallback: true, // 404s will fallback to /index.html
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './src/index.html',
+      template: './public/index.html',
+      filename: 'index.html',
+      showErrors: true,
     }),
   ],
   resolve: {
