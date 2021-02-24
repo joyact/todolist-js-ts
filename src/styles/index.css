@@ -40,7 +40,16 @@ nav {
 }
 
 .nav-link a {
-  color: #fff;
+  color: rgba(255, 255, 255, 0.55);
+  transition: color 0.15s ease-in-out;
+}
+
+.nav-link a:hover {
+  color: rgba(255, 255, 255, 0.75);
+}
+
+a.nav-active {
+  color: rgba(255, 255, 255, 0.95);
 }
 
 .nav-text {
@@ -48,7 +57,7 @@ nav {
   color: #aaa;
 }
 
-#app {
+#content {
   display: flex;
   justify-content: center;
   align-items: center;

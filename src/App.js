@@ -1,19 +1,24 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Nav from './components/Nav';
-import { Home, Calculator, Clock, Painter, Todolist } from './pages';
+import { navs } from './data/navData';
 
 const App = () => (
   <Router>
     <Nav />
     <Switch>
-      <div className="content">
-        <Route exact path="/" component={Home} />
-        <Route path="/calculator" component={Calculator} />
-        <Route path="/clock" component={Clock} />
-        <Route path="/painter" component={Painter} />
-        <Route path="/todolist" component={Todolist} />
-      </div>
+      <>
+        <div id="content">
+          {navs.map((navItem) => (
+            <Route
+              exact
+              key={navItem.id}
+              path={navItem.path}
+              component={navItem.component}
+            />
+          ))}
+        </div>
+      </>
     </Switch>
   </Router>
 );
