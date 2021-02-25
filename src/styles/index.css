@@ -213,3 +213,84 @@ a.nav-active {
   width: 10px;
   height: 35%;
 }
+
+/* Painter */
+#canvas {
+  width: 1000px;
+  height: 550px;
+  background-color: white;
+  margin-bottom: 30px;
+  border-radius: 15px;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+.flex-center {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.control-wrap {
+  height: 50px;
+}
+
+.control-btn {
+  width: 18%;
+  height: 100%;
+  margin-left: 15px;
+}
+
+.control-btn button {
+  /* all: unset; */
+  cursor: pointer;
+  font-size: 33px;
+  color: rgba(255, 255, 255, 0.9);
+  text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.15);
+}
+
+button.current-btn {
+  color: #2c2c2c;
+}
+
+.active {
+  border-bottom: 5px solid rgba(255, 255, 255, 0.85);
+  border-radius: 3px;
+}
+
+.control-btn button:hover {
+  opacity: 0.85;
+}
+
+.control-btn button:active {
+  transform: scale(0.96);
+}
+
+.divider {
+  display: inline-block;
+  margin: 0 10px;
+  width: 2px;
+  height: 40%;
+  background: #fff;
+  opacity: 0.3;
+}
+
+.control-range {
+  width: 20%;
+}
+
+.control-range input {
+  width: 100%;
+}
+
+.control-colors {
+  display: flex;
+}
+
+.color {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 5px;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.1);
+}
