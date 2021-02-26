@@ -6,10 +6,10 @@ function Todolist() {
     const newListForm = document.querySelector('[data-list-form]');
     const newListInput = document.querySelector('[data-list-input]');
     const taskBox = document.querySelector('[data-task-box]');
+    const taskNone = document.querySelector('[data-task-empty]');
     const taskTitle = document.querySelector('[data-task-title]');
     const taskCount = document.querySelector('[data-task-count]');
     const taskContainer = document.querySelector('[data-tasks]');
-    const taskTemplate = document.getElementById('task-template');
     const newTaskForm = document.querySelector('[data-task-form]');
     const newTaskInput = document.querySelector('[data-task-input]');
     const deleteButton = document.querySelector('[data-delete-btn');
@@ -17,6 +17,7 @@ function Todolist() {
 
     const LOCAL_LIST_KEY = 'task.lists';
     const LOCAL_ACTIVE_LIST_KEY = 'task.activeList';
+
     let lists = JSON.parse(localStorage.getItem(LOCAL_LIST_KEY)) || [];
     let activeListId = localStorage.getItem(LOCAL_ACTIVE_LIST_KEY);
 
@@ -48,9 +49,15 @@ function Todolist() {
       if (listName == null || listName === '') return;
 
       const list = createList(listName);
-      lists.push(list);
+
+      if (lists) {
+        activeListId = list.id;
+      }
+
+      lists.unshift(list);
       newListInput.value = '';
 
+      renderLists();
       saveAndRender();
     });
 
@@ -72,12 +79,19 @@ function Todolist() {
     clearCompleteButton.addEventListener('click', (e) => {
       const activeList = lists.find((list) => list.id === activeListId);
       activeList.tasks = activeList.tasks.filter((task) => !task.isComplete);
+
       saveAndRender();
     });
 
     // delete current list
     deleteButton.addEventListener('click', (e) => {
       lists = lists.filter((list) => list.id !== activeListId);
+      console.log(lists);
+
+      if (lists) {
+        activeListId = lists[0].id;
+      }
+
       saveAndRender();
     });
 
@@ -126,12 +140,19 @@ function Todolist() {
       renderLists(); // Represent list data into DOM
 
       // render task container when the list is selected
-      const activeList = lists.find((list) => list.id === activeListId);
+      let activeList = lists.find((list) => list.id === activeListId);
+      let lastAdded = lists[0];
+
+      if (activeList == null && lastAdded) {
+        activeList = lastAdded;
+      }
 
       if (activeList == null) {
         taskBox.style.display = 'none';
+        taskNone.style.display = 'block';
       } else {
         taskBox.style.display = 'block';
+        taskNone.style.display = 'none';
         getTaskInfo(activeList);
         clearElements(taskContainer); // remove current DOM elements
         renderTasks(activeList); // Represent task data into DOM
@@ -155,15 +176,20 @@ function Todolist() {
     // create a new task by the template
     function renderTasks(activeList) {
       activeList.tasks.forEach((task) => {
-        const taskElement = document.importNode(taskTemplate.content, true);
-        const checkbox = taskElement.querySelector('input');
-        const label = taskElement.querySelector('label');
+        const taskElement = document.createElement('div');
+        const checkbox = document.createElement('input');
+        const label = document.createElement('label');
+        const span = document.createElement('span');
 
-        // checkbox.id = task.id;
-        // checkbox.checked = task.isComplete;
-        // label.htmlFor = task.id;
-        // label.append(task.task);
-        taskContainer.appendChild(taskElement);
+        checkbox.type = 'checkbox';
+        span.classList.add('custom-checkbox');
+        checkbox.id = task.id;
+        checkbox.checked = task.isComplete;
+        label.htmlFor = task.id;
+        label.append(span, task.task);
+        taskElement.classList.add('task');
+        taskElement.append(checkbox, label);
+        taskContainer.append(taskElement);
       });
     }
 
@@ -180,8 +206,8 @@ function Todolist() {
   return (
     <div className="todolist">
       <div className="list-wrapper">
-        <h2 className="list-title">Project Title</h2>
-        <form action="" data-list-form>
+        <form action="" data-list-form className="list-form">
+          <h2 className="list-title">Project Title : </h2>
           <input
             type="text"
             className="new list"
@@ -195,15 +221,18 @@ function Todolist() {
         </form>
         <ul className="lists" data-lists></ul>
       </div>
+      <div className="task-empty" data-task-empty>
+        <p>Add a new project</p>
+      </div>
       <div className="task-wrapper" data-task-box>
         <div className="task-header">
           <h2 className="task-title" data-task-title></h2>
           <p className="task-count" data-task-count></p>
         </div>
         <div className="task-body">
-          <div className="tasks" data-tasks></div>
           <div className="add-task">
-            <form action="" data-task-form>
+            <div className="tasks" data-tasks></div>
+            <form action="" className="task-form" data-task-form>
               <input
                 type="text"
                 className="new todo"
@@ -216,24 +245,16 @@ function Todolist() {
               </button>
             </form>
           </div>
-          <div className="delete-task">
-            <button className="btn delete" data-clear-btn>
-              Clear completed tasks
-            </button>
-            <button className="btn delete" data-delete-btn="">
-              Delete list
-            </button>
-          </div>
+        </div>
+        <div className="delete-task">
+          <button className="btn delete" data-clear-btn>
+            Clear completed tasks
+          </button>
+          <button className="btn delete" data-delete-btn="">
+            Delete list
+          </button>
         </div>
       </div>
-      <template id="task-template">
-        <div className="task">
-          <input type="checkbox" />
-          <label>
-            <span className="custom-checkbox"></span>
-          </label>
-        </div>
-      </template>
     </div>
   );
 }
