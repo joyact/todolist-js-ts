@@ -86,9 +86,8 @@ function Todolist() {
     // delete current list
     deleteButton.addEventListener('click', (e) => {
       lists = lists.filter((list) => list.id !== activeListId);
-      console.log(lists);
 
-      if (lists) {
+      if (lists.length > 0) {
         activeListId = lists[0].id;
       }
 
@@ -222,7 +221,7 @@ function Todolist() {
         <ul className="lists" data-lists></ul>
       </div>
       <div className="task-empty" data-task-empty>
-        <p>Add a new project</p>
+        <p>Congrats! You've completed all projects!</p>
       </div>
       <div className="task-wrapper" data-task-box>
         <div className="task-header">

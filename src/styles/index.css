@@ -65,6 +65,11 @@ a.nav-active {
   background: linear-gradient(to right, #2b5876, #4e4376);
 }
 
+/* Home */
+.home > img {
+  width: 600px;
+}
+
 /* Calculator */
 .calculator {
   display: grid;
@@ -403,13 +408,17 @@ form {
 }
 
 .btn.delete {
-  opacity: 0.7;
-  font-size: 1rem;
-  transition: color 150ms;
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.btn.delete:last-child {
+  color: #ff4f4f;
+  margin-left: 40px;
 }
 
 .btn.delete:hover {
-  color: var(--clr-warning);
+  opacity: 0.8;
 }
 
 .task-wrapper {
@@ -534,10 +543,10 @@ form {
 }
 
 .delete-task {
+  width: 100%;
   position: absolute;
   bottom: -40px;
-  left: 50%;
-  transform: translateX(-50%);
+  text-align: center;
   color: var(--clr-light);
 }
 

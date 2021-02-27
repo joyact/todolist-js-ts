@@ -113,7 +113,7 @@ function Painter() {
       <canvas id="canvas"></canvas>
       <div className="control-wrap flex-center">
         <div className="control-btn flex-center">
-          <button className="paint-btn active-btn">
+          <button className="paint-btn active">
             <FaPaintBrush />
           </button>
           <button className="fill-btn">
