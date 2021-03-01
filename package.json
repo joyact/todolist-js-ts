@@ -24,6 +24,7 @@
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.2.0",
     "react": "^17.0.1",
+    "react-animated-weather": "^4.0.1",
     "react-dom": "^17.0.1",
     "react-icons": "^4.2.0",
     "react-router-dom": "^5.2.0",
