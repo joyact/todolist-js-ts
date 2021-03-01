@@ -1,24 +1,25 @@
 @import './reset.css';
 
-:root {
-  --nav-width: 450px;
-}
-
 body {
-  margin: 0 0 0 var(--nav-width);
   font-family: 'Quicksand', sans-serif;
   font-size: 18px;
 }
 
+#root {
+  width: 100%;
+  display: flex;
+}
+
 nav {
-  position: fixed;
-  top: 0;
+  position: relative;
   left: 0;
-  width: var(--nav-width);
+  width: 40%;
+  max-width: 500px;
   height: 100vh;
   background: #333;
   color: #fff;
   padding: 60px 0;
+  transition: all 0.3s ease-in-out;
 
   display: flex;
   flex-direction: column;
@@ -63,6 +64,10 @@ a.nav-active {
   align-items: center;
   height: 100vh;
   background: linear-gradient(to right, #2b5876, #4e4376);
+  flex: 1;
+  padding: 0 20px;
+
+  position: relative;
 }
 
 /* Home */
@@ -70,7 +75,6 @@ a.nav-active {
   max-width: 800px;
   height: auto;
   text-align: center;
-  padding: 0 20px;
 }
 
 .home > img {
@@ -613,4 +617,69 @@ form {
   text-align: center;
   border: 4px dotted rgba(255, 255, 255, 0.25);
   background: rgba(255, 255, 255, 0.25);
+}
+
+@media (max-width: 768px) {
+  nav {
+    width: 0;
+    left: -500px;
+    visibility: hidden;
+  }
+
+  nav.active {
+    left: 0;
+    width: 100%;
+    visibility: visible;
+    position: fixed;
+    z-index: 100;
+  }
+
+  #content {
+    width: 100%;
+    position: absolute;
+    left: 0;
+  }
+
+  .toggle-btn {
+    position: absolute;
+    background-image: url('../images/navbtn.svg');
+    background-size: contain;
+    width: 40px;
+    height: 40px;
+    top: 15px;
+    right: 15px;
+    cursor: pointer;
+    z-index: 100;
+  }
+
+  .calculator {
+    grid-template-columns: repeat(4, 85px);
+    grid-template-rows: minmax(110px, auto) repeat(5, 85px);
+  }
+
+  .clock {
+    width: 340px;
+    height: 340px;
+  }
+
+  .todolist .lists {
+    margin: 20px 0 20px;
+  }
+
+  .todolist .list-name {
+    margin-right: 20px;
+  }
+
+  .todolist .task-wrapper {
+    --spacer: 1.2rem;
+    min-height: auto;
+  }
+
+  .btn.delete {
+    font-size: 1.1rem;
+  }
+
+  .btn.delete:last-child {
+    margin-left: 20px;
+  }
 }
